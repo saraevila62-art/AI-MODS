@@ -8,19 +8,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # Скачиваем gradlew, так как его нет в архиве автора
-      - name: Download Gradle Wrapper
-        run: |
-          curl -sL https://raw.githubusercontent.com/neoformnet/neoforge-template/main/gradlew -o gradlew
-          chmod +x gradlew
-          
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           
-      - name: Setup Gradle
+      # Устанавливаем сам Gradle глобально
+      - name: Install Gradle
+        run: sudo apt-get update && sudo apt-get install -y gradle
+        
+      # Генерируем gradlew прямо здесь, чтобы он был рабочим
+      - name: Generate Wrapper
+        run: |
+          if [ ! -f ./gradlew ]; then
+            echo "Generating gradle wrapper..."
+            gradle wrapper --gradle-version 8.5
+          fi
+          chmod +x ./gradlew
+          
+      - name: Setup Gradle Action
         uses: gradle/actions/setup-gradle@v3
         
       - name: Build with Gradle
