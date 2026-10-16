@@ -7,11 +7,11 @@ public class Cfg {
     public static final ModConfigSpec.ConfigValue<String> PROVIDER, BASE, KEY, MODEL, PERSONA;
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
-        PROVIDER = b.comment("openai = формат OpenAI (Grok от xAI, OpenAI и др.); anthropic = Claude").define("provider", "openai");
-        BASE = b.comment("Адрес API без /chat/completions. Для Grok: https://api.x.ai/v1").define("baseUrl", "https://api.x.ai/v1");
-        KEY = b.comment("API-ключ (для Grok начинается с xai-). Не показывайте этот файл другим!").define("apiKey", "");
-        MODEL = b.comment("Имя модели. Для Grok смотрите актуальные на docs.x.ai, например grok-4.3").define("model", "grok-4.3");
-        PERSONA = b.comment("Свои дополнения к характеру Мию (по-русски, без сексуального контента). Можно оставить пустым").define("persona", "");
+        PROVIDER = b.comment("openai = формат OpenAI").define("provider", "openai");
+        BASE = b.comment("Адрес API").define("baseUrl", "https://openrouter.ai/api/v1");
+        KEY = b.comment("API-ключ (начинается с sk-or-v1-)").define("apiKey", "");
+        MODEL = b.comment("Модель").define("model", "qwen/qwen-2.5-7b-instruct:free");
+        PERSONA = b.comment("Характер").define("persona", "Всегда отвечай на русском языке.");
         SPEC = b.build();
     }
 }
