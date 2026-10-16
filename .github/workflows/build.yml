@@ -14,16 +14,20 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           
-      # Устанавливаем сам Gradle глобально
-      - name: Install Gradle
-        run: sudo apt-get update && sudo apt-get install -y gradle
-        
-      # Генерируем gradlew прямо здесь, чтобы он был рабочим
+      # Устанавливаем современный Gradle напрямую из официального источника
+      - name: Install Modern Gradle
+        run: |
+          wget https://services.gradle.org/distributions/gradle-8.9-bin.zip
+          unzip gradle-8.9-bin.zip
+          sudo mv gradle-8.9 /opt/gradle
+          echo "/opt/gradle/bin" >> $GITHUB_PATH
+          
+      # Генерируем wrapper с нужной версией
       - name: Generate Wrapper
         run: |
           if [ ! -f ./gradlew ]; then
             echo "Generating gradle wrapper..."
-            gradle wrapper --gradle-version 8.5
+            gradle wrapper --gradle-version 8.9
           fi
           chmod +x ./gradlew
           
