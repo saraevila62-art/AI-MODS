@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="miyu"
+version="1.0.0"
+displayName="Miyu Companion"
+description="AI companion Miyu: entity, menu and Claude chat."
+[[dependencies.miyu]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.209,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.miyu]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1,1.21.2)"
+ordering="NONE"
+side="BOTH"

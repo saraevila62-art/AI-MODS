@@ -1,0 +1,11 @@
+plugins { id 'java'; id 'net.neoforged.moddev' version '1.0.21' }
+group = 'com.example.miyu'
+version = '1.0.0'
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories { mavenCentral() }
+neoForge {
+    version = '21.1.209'
+    runs { client { client() } }
+    mods { miyu { sourceSet(sourceSets.main) } }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
