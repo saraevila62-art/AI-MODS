@@ -14,11 +14,11 @@ public class Cfg {
         MODEL = b.comment("Имя модели. OpenRouter бесплатно: meta-llama/llama-3.3-70b-instruct:free, openai/gpt-oss-120b:free или openrouter/free").define("model", "meta-llama/llama-3.3-70b-instruct:free");
         PERSONA = b.comment("Свои дополнения к характеру (по-русски, без сексуального контента). Можно пусто").define("persona", "");
         GENDER = b.comment("Пол персонажа: female или male (влияет на род в репликах и в промпте ИИ)").define("gender", "female");
-        NAME = b.comment("Имя персонажа в промпте ИИ").define("name", "Мию");
+        NAME = b.comment("Имя персонажа в промпте ИИ").define("name", "Юно Гасай");
         SLIM = b.comment("true = тонкие руки (скин Alex/Slim), false = обычные (скин Steve/Classic)").define("slimArms", false);
         SPEC = b.build();
     }
     public static boolean male() { try { return GENDER.get().trim().equalsIgnoreCase("male"); } catch (Exception e) { return false; } }
-    public static String name() { try { String n = NAME.get().trim(); return n.isEmpty() ? "Мию" : n; } catch (Exception e) { return "Мию"; } }
+    public static String name() { try { String n = NAME.get().trim(); return n.isEmpty() ? "Юно Гасай" : n; } catch (Exception e) { return "Юно Гасай"; } }
     public static boolean slim() { try { return SLIM.get(); } catch (Exception e) { return false; } }
 }
