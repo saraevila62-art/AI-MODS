@@ -8,32 +8,36 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-/** Круговое меню (колесо) Мию + списки «Коснуться» и «Жесты». */
+/** Круговое меню (колесо) Мию + списки «Коснуться», «Жесты» и «Сцены». */
 public class MiyuWheel extends Screen {
-    static final String[] L = {"Ко мне", "За мной", "Жди здесь", "Коснуться", "Жесты", "Меню"};
+    static final String[] L = {"Ко мне", "За мной", "Жди здесь", "Коснуться", "Жесты", "Сцены", "Меню"};
+    static final int NS = 7;
+    static final double SEC = 360.0 / NS;
     /** {название, команда (9 + номер жеста), реплика в чат} */
     static final Object[][] TOUCH = {{"Макушка", 11, "Мм... так приятно~"}, {"Рука", 13, "Твоя рука такая тёплая..."},
         {"Плечо", 15, "Можно, я прислонюсь?.."}};
     static final Object[][] GEST = {{"Обнять", 10, "*крепко-крепко обнимает*"}, {"Взять за руку", 13, "*берёт за руку*"},
         {"Прижаться", 15, "*прижимается ближе*"}, {"Встретить", 16, "Наконец-то ты рядом!"},
         {"Помахать", 12, "Привет~"}, {"Смущение", 17, "Ой... не смотри так..."}};
-    static final int R = 68, IN = 24;
+    static final int R = 70, IN = 24;
     final MiyuEntity e;
-    int mode; // 0 колесо, 1 коснуться, 2 жесты
+    int mode; // 0 колесо, 1 коснуться, 2 жесты, 3 сцены
     int cx, cy, hover = -1;
     final List<int[]> runs = new ArrayList<>();
 
     public MiyuWheel(MiyuEntity e) { super(Component.literal("Мию")); this.e = e; }
     @Override public boolean isPauseScreen() { return false; }
+    /** Без размытия фона. */
+    @Override public void renderBackground(GuiGraphics g, int mx, int my, float pt) { }
 
     static int sectorAt(int dx, int dy) {
         double d = Math.hypot(dx, dy);
         if (d > R || d < IN) return -1;
-        if (d > R - 2 || d < IN + 2) return 6;
-        double rel = (Math.toDegrees(Math.atan2(dy, dx)) + 120 + 720) % 360;
-        double m = rel % 60;
-        if (m < 1.2 || m > 58.8) return -1;
-        return (int) (rel / 60);
+        if (d > R - 2 || d < IN + 2) return NS;
+        double rel = (Math.toDegrees(Math.atan2(dy, dx)) + 90 + SEC / 2 + 720) % 360;
+        double m = rel % SEC;
+        if (m < 1.0 || m > SEC - 1.0) return -1;
+        return (int) (rel / SEC);
     }
 
     @Override protected void init() {
@@ -48,6 +52,18 @@ public class MiyuWheel extends Screen {
                         sec = s; start = dx;
                     }
                 }
+            }
+        } else if (mode == 3) {
+            int n = MiyuScene.count();
+            for (int i = 0; i <= n + 1; i++) {
+                int idx = i;
+                String label = i < n ? MiyuScene.get(i).name : (i == n ? "■ Стоп" : "← Назад");
+                int x = cx - 98 + (i % 2) * 100, y = cy - 52 + (i / 2) * 22;
+                addRenderableWidget(new MiyuScreen.RowButton(x, y, 96, 18, Component.literal(label), b -> {
+                    if (idx < n) { send(100 + idx); onClose(); }
+                    else if (idx == n) { send(99); onClose(); }
+                    else { mode = 0; rebuildWidgets(); }
+                }, false));
             }
         } else {
             Object[][] items = mode == 1 ? TOUCH : GEST;
@@ -68,7 +84,7 @@ public class MiyuWheel extends Screen {
     void send(int c) { PacketDistributor.sendToServer(new CmdPayload(e.getId(), c)); }
     void say(String t) {
         var p = Minecraft.getInstance().player;
-        if (p != null) p.displayClientMessage(Component.literal("§d[Мию]§r " + t), false);
+        if (p != null) p.displayClientMessage(Component.literal("§d[" + Cfg.name() + "]§r " + t), false);
     }
 
     void act(int i) {
@@ -78,6 +94,7 @@ public class MiyuWheel extends Screen {
             case 2 -> { send(1); onClose(); }
             case 3 -> { mode = 1; rebuildWidgets(); }
             case 4 -> { mode = 2; rebuildWidgets(); }
+            case 5 -> { mode = 3; rebuildWidgets(); }
             default -> Minecraft.getInstance().setScreen(new MiyuScreen(e));
         }
     }
@@ -91,20 +108,20 @@ public class MiyuWheel extends Screen {
         g.fill(0, 0, width, height, 0x88000000);
         if (mode == 0) {
             int s = sectorAt(mx - cx, my - cy);
-            hover = (s >= 0 && s < 6) ? s : -1;
+            hover = (s >= 0 && s < NS) ? s : -1;
             for (int[] r : runs) {
-                int col = r[3] == 6 ? 0xFFC98B6A : (r[3] == hover ? 0xFF4A2358 : 0xFF1B1228);
+                int col = r[3] == NS ? 0xFFC98B6A : (r[3] == hover ? 0xFF4A2358 : 0xFF1B1228);
                 g.fill(cx + r[0], cy + r[1], cx + r[0] + r[2], cy + r[1] + 1, col);
             }
-            for (int i = 0; i < 6; i++) {
-                double a = Math.toRadians(-90 + i * 60);
+            for (int i = 0; i < NS; i++) {
+                double a = Math.toRadians(-90 + i * SEC);
                 int lx = cx + (int) (Math.cos(a) * (R + IN) / 2.0), ly = cy + (int) (Math.sin(a) * (R + IN) / 2.0);
                 g.drawCenteredString(font, L[i], lx, ly - 4, i == hover ? 0xFFFFD27F : 0xFFFFFFFF);
             }
             g.drawCenteredString(font, Cfg.name(), cx, cy - 4, 0xFFFFFFFF);
             g.drawCenteredString(font, "Колесо: персонаж · Esc: закрыть", cx, cy + R + 10, 0xFFCCCCCC);
         } else {
-            g.drawCenteredString(font, mode == 1 ? "Коснуться" : "Жесты", cx, cy - 62, 0xFFFFD27F);
+            g.drawCenteredString(font, mode == 1 ? "Коснуться" : (mode == 2 ? "Жесты" : "Сцены"), cx, cy - (mode == 3 ? 70 : 62), 0xFFFFD27F);
         }
         super.render(g, mx, my, pt);
     }

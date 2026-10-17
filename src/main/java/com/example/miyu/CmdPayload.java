@@ -19,6 +19,8 @@ public record CmdPayload(int id, int cmd) implements CustomPacketPayload {
         ctx.enqueueWork(() -> {
             var player = ctx.player();
             if (player.level().getEntity(p.id()) instanceof MiyuEntity m && m.isOwnedBy(player)) {
+                if (p.cmd() >= 100) { m.startScene(p.cmd() - 100); return; }
+                if (p.cmd() == 99) { m.stopScene(); return; }
                 switch (p.cmd()) {
                     case 0 -> m.setOrderedToSit(false);
                     case 1 -> m.setOrderedToSit(true);

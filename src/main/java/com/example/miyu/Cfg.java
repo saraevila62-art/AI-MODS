@@ -11,7 +11,7 @@ public class Cfg {
         PROVIDER = b.comment("openai = формат OpenAI (Grok, OpenRouter, OpenAI и др.); anthropic = Claude").define("provider", "openai");
         BASE = b.comment("Адрес API без /chat/completions. OpenRouter: https://openrouter.ai/api/v1  Grok: https://api.x.ai/v1").define("baseUrl", "https://openrouter.ai/api/v1");
         KEY = b.comment("API-ключ. Не показывайте этот файл другим!").define("apiKey", "");
-        MODEL = b.comment("Имя модели (для OpenRouter вида автор/модель)").define("model", "");
+        MODEL = b.comment("Имя модели. OpenRouter бесплатно: meta-llama/llama-3.3-70b-instruct:free, openai/gpt-oss-120b:free или openrouter/free").define("model", "meta-llama/llama-3.3-70b-instruct:free");
         PERSONA = b.comment("Свои дополнения к характеру (по-русски, без сексуального контента). Можно пусто").define("persona", "");
         GENDER = b.comment("Пол персонажа: female или male (влияет на род в репликах и в промпте ИИ)").define("gender", "female");
         NAME = b.comment("Имя персонажа в промпте ИИ").define("name", "Мию");

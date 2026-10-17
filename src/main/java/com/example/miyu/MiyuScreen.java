@@ -23,22 +23,24 @@ public class MiyuScreen extends Screen {
     static final String[][] ACT = {{"Погладить", "*нежно глажу тебя по голове*", "2"}, {"Обнять", "*крепко обнимаю тебя*", "1"},
         {"Взять за руку", "*беру тебя за руку*", "4"}, {"Помахать", "*машу тебе рукой*", "3"},
         {"Признаться", "Я люблю тебя.", "1"}, {"Прижаться", "*прижимаюсь к тебе ближе*", "6"}};
-    static final String[] TABS = {"Общение", "Действия", "Приказы"};
-    static final String[] TKEY = {"chat", "act", "ord"};
+    static final String[] TABS = {"Общение", "Действия", "Приказы", "Сцены"};
+    static final String[] TKEY = {"chat", "act", "ord", "sc"};
 
     final MiyuEntity e;
     String view = "act";
     EditBox box;
     boolean busy;
-    int px, py, pw = 240, ph = 156, y0;
+    int px, py, pw = 240, ph = 176, y0;
 
     public MiyuScreen(MiyuEntity e) { super(Component.literal("Мию")); this.e = e; }
     @Override public boolean isPauseScreen() { return false; }
+    /** Без размытия фона. */
+    @Override public void renderBackground(GuiGraphics gg, int mx, int my, float pt) { }
 
     @Override protected void init() {
         px = (width - pw) / 2; py = Math.max(2, (height - ph - 44) / 2); box = null; y0 = py + 70;
-        int tw = (pw - 24) / 3;
-        for (int i = 0; i < 3; i++) {
+        int tw = (pw - 28) / 4;
+        for (int i = 0; i < 4; i++) {
             int idx = i;
             addRenderableWidget(new RowButton(px + 8 + i * (tw + 4), py + 50, tw, 16, Component.literal(TABS[i]), b -> go(TKEY[idx]), view.equals(TKEY[i])));
         }
@@ -51,6 +53,16 @@ public class MiyuScreen extends Screen {
                 String[] l = new String[ACT.length];
                 for (int i = 0; i < l.length; i++) l[i] = ACT[i][0];
                 grid(y0, l, i -> { gesture(Integer.parseInt(ACT[i][2])); send(ACT[i][1]); });
+            }
+            case "sc" -> {
+                int n = Math.min(MiyuScene.count(), 7);
+                String[] l = new String[n + 1];
+                for (int i = 0; i < n; i++) l[i] = MiyuScene.get(i).name;
+                l[n] = "■ Стоп";
+                grid(y0, l, i -> {
+                    if (i < n) { PacketDistributor.sendToServer(new CmdPayload(e.getId(), 100 + i)); onClose(); }
+                    else PacketDistributor.sendToServer(new CmdPayload(e.getId(), 99));
+                });
             }
             default -> grid(y0, new String[]{"За мной", "Жди здесь", "Ко мне"}, i -> {
                 if (i == 0) cmd(0, "Пойдём со мной."); else if (i == 1) cmd(1, "Подожди меня здесь."); else cmd(2, "Иди ко мне.");
@@ -69,7 +81,7 @@ public class MiyuScreen extends Screen {
         }
     }
     void go(String v) { view = v; rebuildWidgets(); }
-    void gesture(int g) { if (g > 0) PacketDistributor.sendToServer(new CmdPayload(e.getId(), 9 + g)); }
+    void gesture(int gg) { if (gg > 0) PacketDistributor.sendToServer(new CmdPayload(e.getId(), 9 + gg)); }
     void cmd(int c, String msg) { PacketDistributor.sendToServer(new CmdPayload(e.getId(), c)); send(msg); }
 
     @Override public boolean keyPressed(int k, int s, int m) {
@@ -82,8 +94,9 @@ public class MiyuScreen extends Screen {
             case "shy" -> 0xFFFFB6C1; case "error" -> 0xFFFFAA00; default -> 0xFFFFFFFF; };
     }
     static String lab(String m) {
-        return switch (m) { case "jealous" -> "[Мию — ЯРОСТЬ] //"; case "sad" -> "[Мию — ГРУСТЬ] //";
-            case "happy" -> "[Мию — РАДОСТЬ] //"; case "shy" -> "[Мию — СМУЩЕНИЕ] //"; default -> "[Мию]"; };
+        String n = Cfg.name();
+        return switch (m) { case "jealous" -> "[" + n + " — ЯРОСТЬ] //"; case "sad" -> "[" + n + " — ГРУСТЬ] //";
+            case "happy" -> "[" + n + " — РАДОСТЬ] //"; case "shy" -> "[" + n + " — СМУЩЕНИЕ] //"; default -> "[" + n + "]"; };
     }
 
     void send(String msg) {
@@ -97,7 +110,7 @@ public class MiyuScreen extends Screen {
                 love = Math.max(0, Math.min(100, love + r.love()));
                 int d = switch (mood) { case "happy" -> 4; case "shy" -> 2; case "jealous" -> -3; case "sad" -> -6; default -> 0; };
                 hp = Math.max(0, Math.min(100, hp + d));
-                hist.add("Игрок: " + msg); hist.add("Мию: " + r.text());
+                hist.add("Игрок: " + msg); hist.add(Cfg.name() + ": " + r.text());
             }
             var p = Minecraft.getInstance().player;
             String c = mood.equals("jealous") ? "§c" : "§d";
@@ -105,45 +118,48 @@ public class MiyuScreen extends Screen {
         }));
     }
 
-    static void bar(GuiGraphics g, int x, int y, int w, int h, int pct, int colr, String label, Font f) {
-        g.fill(x, y, x + w, y + h, 0xFF07050C);
-        g.fill(x, y, x + w * pct / 100, y + h, colr);
-        g.renderOutline(x, y, w, h, 0xFF2D2048);
-        g.drawString(f, label, x + 3, y + 1, 0xFFFFFFFF, true);
-        String s = pct + "%"; g.drawString(f, s, x + w - 3 - f.width(s), y + 1, 0xFFFFFFFF, true);
+    static void bar(GuiGraphics gg, int x, int y, int w, int h, int pct, int colr, String label, Font f) {
+        gg.fill(x, y, x + w, y + h, 0xFF07050C);
+        gg.fill(x, y, x + w * pct / 100, y + h, colr);
+        gg.renderOutline(x, y, w, h, 0xFF2D2048);
+        gg.drawString(f, label, x + 3, y + 1, 0xFFFFFFFF, true);
+        String s = pct + "%"; gg.drawString(f, s, x + w - 3 - f.width(s), y + 1, 0xFFFFFFFF, true);
     }
 
-    @Override public void render(GuiGraphics g, int mx, int my, float pt) {
-        g.fill(0, 0, width, height, 0x99000000);
-        g.fill(px, py, px + pw, py + ph, 0xFF120C1E);
-        g.renderOutline(px, py, pw, ph, 0xFF5B3A8A); g.renderOutline(px + 2, py + 2, pw - 4, ph - 4, 0xFF2D2048);
-        g.blit(TEX, px + 8, py + 8, 36, 36, 8, 8, 8, 8, 64, 64);
-        g.blit(TEX, px + 8, py + 8, 36, 36, 40, 8, 8, 8, 64, 64);
-        g.renderOutline(px + 8, py + 8, 36, 36, 0xFF5B3A8A);
-        g.drawString(font, Cfg.name(), px + 50, py + 8, 0xFFECE6F7, true);
-        g.drawString(font, g("— одержима, ревнивая", "— одержим, ревнив"), px + 50 + font.width(Cfg.name() + " "), py + 8, 0xFFA898C8, false);
-        bar(g, px + 50, py + 20, pw - 58, 10, hp, 0xFFFF4A63, "Здоровье", font);
-        bar(g, px + 50, py + 33, pw - 58, 10, love, 0xFFFF3D8B, "Одержимость", font);
-        g.fill(px + 8, py + 46, px + pw - 8, py + 47, 0xFF2D2048);
-        if (view.equals("chat")) g.drawString(font, "Enter — отправить", px + 10, y0 + 24, 0xFFA898C8, false);
-        super.render(g, mx, my, pt);
+    @Override public void render(GuiGraphics gg, int mx, int my, float pt) {
+        gg.fill(0, 0, width, height, 0x99000000);
+        gg.fill(px, py, px + pw, py + ph, 0xFF120C1E);
+        gg.renderOutline(px, py, pw, ph, 0xFF5B3A8A); gg.renderOutline(px + 2, py + 2, pw - 4, ph - 4, 0xFF2D2048);
+        gg.blit(TEX, px + 8, py + 8, 36, 36, 8, 8, 8, 8, 64, 64);
+        gg.blit(TEX, px + 8, py + 8, 36, 36, 40, 8, 8, 8, 64, 64);
+        gg.renderOutline(px + 8, py + 8, 36, 36, 0xFF5B3A8A);
+        gg.drawString(font, Cfg.name(), px + 50, py + 8, 0xFFECE6F7, true);
+        gg.drawString(font, g("— одержима, ревнивая", "— одержим, ревнив"), px + 50 + font.width(Cfg.name() + " "), py + 8, 0xFFA898C8, false);
+        bar(gg, px + 50, py + 20, pw - 58, 10, hp, 0xFFFF4A63, "Здоровье", font);
+        bar(gg, px + 50, py + 33, pw - 58, 10, love, 0xFFFF3D8B, "Одержимость", font);
+        gg.fill(px + 8, py + 46, px + pw - 8, py + 47, 0xFF2D2048);
+        if (view.equals("chat")) {
+            String st = MiyuAI.status();
+            gg.drawString(font, st.isEmpty() ? "Enter — отправить" : st, px + 10, y0 + 24, st.isEmpty() ? 0xFFA898C8 : 0xFFFFAA00, false);
+        }
+        super.render(gg, mx, my, pt);
         int dy = py + ph + 4;
         int ac = col(mood);
-        g.fill(px, dy, px + pw, dy + 38, 0xCC000000); g.fill(px, dy, px + 3, dy + 38, mood.equals("jealous") ? 0xFFFF3030 : 0xFFFF3D8B);
+        gg.fill(px, dy, px + pw, dy + 38, 0xCC000000); gg.fill(px, dy, px + 3, dy + 38, mood.equals("jealous") ? 0xFFFF3030 : 0xFFFF3D8B);
         int i = 0;
-        for (var l : font.split(Component.literal(lab(mood) + " " + shown()), pw - 14)) { if (i >= 3) break; g.drawString(font, l, px + 7, dy + 4 + i * 10, ac, false); i++; }
+        for (var l : font.split(Component.literal(lab(mood) + " " + shown()), pw - 14)) { if (i >= 3) break; gg.drawString(font, l, px + 7, dy + 4 + i * 10, ac, false); i++; }
     }
 
     static class RowButton extends Button {
         final boolean sel;
         RowButton(int x, int y, int w, int h, Component m, OnPress p, boolean sel) { super(x, y, w, h, m, p, DEFAULT_NARRATION); this.sel = sel; }
-        @Override public void renderWidget(GuiGraphics g, int mx, int my, float pt) {
+        @Override public void renderWidget(GuiGraphics gg, int mx, int my, float pt) {
             boolean hv = isHoveredOrFocused();
-            g.fill(getX(), getY(), getX() + width, getY() + height, hv || sel ? 0xFF1C1230 : 0xFF150E22);
-            g.renderOutline(getX(), getY(), width, height, sel ? 0xFFFF3D8B : (hv ? 0xFFA259E0 : 0xFF2D2048));
-            if (hv) g.fill(getX(), getY(), getX() + 2, getY() + height, 0xFFFF3D8B);
+            gg.fill(getX(), getY(), getX() + width, getY() + height, hv || sel ? 0xFF1C1230 : 0xFF150E22);
+            gg.renderOutline(getX(), getY(), width, height, sel ? 0xFFFF3D8B : (hv ? 0xFFA259E0 : 0xFF2D2048));
+            if (hv) gg.fill(getX(), getY(), getX() + 2, getY() + height, 0xFFFF3D8B);
             var f = Minecraft.getInstance().font;
-            g.drawString(f, getMessage(), getX() + (width - f.width(getMessage())) / 2, getY() + (height - 8) / 2, 0xFFECE6F7, false);
+            gg.drawString(f, getMessage(), getX() + (width - f.width(getMessage())) / 2, getY() + (height - 8) / 2, 0xFFECE6F7, false);
         }
     }
 }
