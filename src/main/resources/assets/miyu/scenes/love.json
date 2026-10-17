@@ -1,0 +1,1045 @@
+{
+  "format": 1,
+  "name": "яндере_любовь",
+  "npc": {
+    "winks": [],
+    "cues": [
+      {
+        "kind": "text",
+        "speech": true,
+        "expression": "focused",
+        "tick": 50,
+        "length": 45,
+        "text": "ты ведь никуда не уйдёшь...",
+        "source": "",
+        "label": "",
+        "offset": 0,
+        "volume": 1.0,
+        "color": 16731528,
+        "screenY": 75
+      },
+      {
+        "kind": "text",
+        "speech": true,
+        "expression": "warm",
+        "tick": 105,
+        "length": 40,
+        "text": "я так долго ждала тебя",
+        "source": "",
+        "label": "",
+        "offset": 0,
+        "volume": 1.0,
+        "color": 16731528,
+        "screenY": 75
+      },
+      {
+        "kind": "text",
+        "speech": true,
+        "expression": "playful",
+        "tick": 140,
+        "length": 55,
+        "text": "теперь ты только мой~",
+        "source": "",
+        "label": "",
+        "offset": 0,
+        "volume": 1.0,
+        "color": 16711850,
+        "screenY": 75
+      },
+      {
+        "kind": "text",
+        "speech": true,
+        "expression": "warm",
+        "tick": 200,
+        "length": 45,
+        "text": "я всегда буду рядом...",
+        "source": "",
+        "label": "",
+        "offset": 0,
+        "volume": 1.0,
+        "color": 16731528,
+        "screenY": 75
+      }
+    ],
+    "eyeGlow": [
+      {
+        "tick": 80,
+        "enabled": true,
+        "fadeTicks": 20
+      },
+      {
+        "tick": 215,
+        "enabled": false,
+        "fadeTicks": 20
+      }
+    ],
+    "blush": [],
+    "sharedEyeGlow": false,
+    "eyeGlowClockOnly": false,
+    "petPoints": [],
+    "adornmentKeys": [],
+    "faceKeys": [],
+    "name": "npc_yandere",
+    "bedRelative": false,
+    "smooth": true,
+    "transitionTicks": 5.0,
+    "transitionStart": 0.0,
+    "entryTicks": 0,
+    "withItems": false,
+    "duration": 260,
+    "frames": [
+      {
+        "tick": 0,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.45,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 20,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.43,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            4.0,
+            0.0,
+            8.0
+          ],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [
+            1.0
+          ],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 50,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.4,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            8.0,
+            0.0,
+            14.0
+          ],
+          "right_forearm": [
+            -85.0
+          ],
+          "left_shin": [],
+          "chest": [
+            3.0
+          ],
+          "right_arm": [
+            -35.0,
+            -40.0,
+            0.0
+          ],
+          "left_forearm": [
+            -85.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -35.0,
+            40.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 80,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.34,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            12.0,
+            0.0,
+            18.0
+          ],
+          "right_forearm": [
+            -85.0
+          ],
+          "left_shin": [],
+          "chest": [
+            6.0
+          ],
+          "right_arm": [
+            -35.0,
+            -40.0,
+            0.0
+          ],
+          "left_forearm": [
+            -85.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -35.0,
+            40.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 105,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.3,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            14.0,
+            0.0,
+            -18.0
+          ],
+          "right_forearm": [
+            -85.0
+          ],
+          "left_shin": [],
+          "chest": [
+            7.0
+          ],
+          "right_arm": [
+            -35.0,
+            -40.0,
+            0.0
+          ],
+          "left_forearm": [
+            -85.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -35.0,
+            40.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 125,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.26,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            10.0,
+            0.0,
+            0.0
+          ],
+          "right_forearm": [
+            -50.0
+          ],
+          "left_shin": [],
+          "chest": [
+            8.0
+          ],
+          "right_arm": [
+            -55.0,
+            -30.0,
+            0.0
+          ],
+          "left_forearm": [
+            -50.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -55.0,
+            30.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 140,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.2,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            10.0,
+            0.0,
+            12.0
+          ],
+          "right_forearm": [
+            -30.0
+          ],
+          "left_shin": [],
+          "chest": [
+            10.0
+          ],
+          "right_arm": [
+            -80.0,
+            -45.0,
+            0.0
+          ],
+          "left_forearm": [
+            -30.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -80.0,
+            45.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 160,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.2,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            10.0,
+            0.0,
+            -8.0
+          ],
+          "right_forearm": [
+            -30.0
+          ],
+          "left_shin": [],
+          "chest": [
+            8.0
+          ],
+          "right_arm": [
+            -80.0,
+            -45.0,
+            0.0
+          ],
+          "left_forearm": [
+            -30.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -80.0,
+            45.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 180,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.2,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            10.0,
+            0.0,
+            10.0
+          ],
+          "right_forearm": [
+            -30.0
+          ],
+          "left_shin": [],
+          "chest": [
+            10.0
+          ],
+          "right_arm": [
+            -82.0,
+            -47.0,
+            0.0
+          ],
+          "left_forearm": [
+            -30.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -82.0,
+            47.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 200,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.2,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            10.0,
+            0.0,
+            -8.0
+          ],
+          "right_forearm": [
+            -30.0
+          ],
+          "left_shin": [],
+          "chest": [
+            8.0
+          ],
+          "right_arm": [
+            -80.0,
+            -45.0,
+            0.0
+          ],
+          "left_forearm": [
+            -30.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -80.0,
+            45.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 215,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.24,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            8.0,
+            0.0,
+            6.0
+          ],
+          "right_forearm": [
+            -40.0
+          ],
+          "left_shin": [],
+          "chest": [
+            5.0
+          ],
+          "right_arm": [
+            -50.0,
+            -30.0,
+            0.0
+          ],
+          "left_forearm": [
+            -40.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -50.0,
+            30.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 240,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.35,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            6.0,
+            0.0,
+            14.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            2.0
+          ],
+          "right_arm": [
+            -20.0,
+            -15.0,
+            0.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            15.0,
+            0.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 260,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -0.45,
+          "yaw": 0.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      }
+    ],
+    "sceneLoopStart": -1,
+    "continuousAction": false,
+    "copyTrackVersion": 0,
+    "sceneHeartTick": -1,
+    "sceneHeartEpoch": -1,
+    "sceneHeartBody": false,
+    "scaleKeys": [],
+    "headKeysOnly": false,
+    "playerJoinTick": 0,
+    "holdSceneLoopEnd": false,
+    "sceneLoopEnd": -1
+  },
+  "player": {
+    "winks": [],
+    "cues": [
+      {
+        "kind": "text",
+        "speech": true,
+        "expression": "surprise",
+        "tick": 110,
+        "length": 35,
+        "text": "э-э... подожди...",
+        "source": "",
+        "label": "",
+        "offset": 0,
+        "volume": 1.0,
+        "color": 16777215,
+        "screenY": 60
+      }
+    ],
+    "eyeGlow": [],
+    "blush": [],
+    "sharedEyeGlow": false,
+    "eyeGlowClockOnly": false,
+    "petPoints": [],
+    "adornmentKeys": [],
+    "faceKeys": [],
+    "name": "player_yandere",
+    "bedRelative": false,
+    "smooth": true,
+    "transitionTicks": 5.0,
+    "transitionStart": 0.0,
+    "entryTicks": 0,
+    "withItems": false,
+    "duration": 260,
+    "frames": [
+      {
+        "tick": 0,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.45,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 20,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.43,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 50,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.4,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -3.0,
+            10.0,
+            0.0
+          ],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 80,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.34,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -6.0,
+            25.0,
+            0.0
+          ],
+          "right_forearm": [
+            0.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -3.0
+          ],
+          "right_arm": [
+            -5.0,
+            0.0,
+            -8.0
+          ],
+          "left_forearm": [
+            0.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -5.0,
+            0.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 105,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.3,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -6.0,
+            25.0,
+            0.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -4.0
+          ],
+          "right_arm": [
+            -20.0,
+            -10.0,
+            -8.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            10.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 125,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.26,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -8.0,
+            0.0,
+            0.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -5.0
+          ],
+          "right_arm": [
+            -20.0,
+            -10.0,
+            -8.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            10.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 140,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.2,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -8.0,
+            0.0,
+            0.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -5.0
+          ],
+          "right_arm": [
+            -20.0,
+            -10.0,
+            -8.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            10.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 200,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.2,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -8.0,
+            0.0,
+            0.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -5.0
+          ],
+          "right_arm": [
+            -20.0,
+            -10.0,
+            -8.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            10.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 215,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.24,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            -4.0,
+            0.0,
+            0.0
+          ],
+          "right_forearm": [
+            -20.0
+          ],
+          "left_shin": [],
+          "chest": [
+            -2.0
+          ],
+          "right_arm": [
+            -20.0,
+            -10.0,
+            -8.0
+          ],
+          "left_forearm": [
+            -20.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -20.0,
+            10.0,
+            8.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 240,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.35,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [
+            0.0,
+            15.0,
+            0.0
+          ],
+          "right_forearm": [
+            0.0
+          ],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [
+            -8.0,
+            0.0,
+            -6.0
+          ],
+          "left_forearm": [
+            0.0
+          ],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [
+            -8.0,
+            0.0,
+            6.0
+          ],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      },
+      {
+        "tick": 260,
+        "motion": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.45,
+          "yaw": 180.0,
+          "leadPlayer": false
+        },
+        "pose": {
+          "head": [],
+          "right_forearm": [],
+          "left_shin": [],
+          "chest": [],
+          "right_arm": [],
+          "left_forearm": [],
+          "right_shin": [],
+          "left_leg": [],
+          "left_arm": [],
+          "right_leg": [],
+          "root": [],
+          "body": []
+        }
+      }
+    ],
+    "sceneLoopStart": -1,
+    "continuousAction": false,
+    "copyTrackVersion": 0,
+    "sceneHeartTick": -1,
+    "sceneHeartEpoch": -1,
+    "sceneHeartBody": false,
+    "scaleKeys": [],
+    "headKeysOnly": false,
+    "playerJoinTick": 0,
+    "holdSceneLoopEnd": false,
+    "sceneLoopEnd": -1,
+    "sceneOffsetX": 0.0,
+    "sceneOffsetY": 0.0,
+    "sceneOffsetZ": 0.0,
+    "sceneOffsetYaw": 0.0
+  }
+}

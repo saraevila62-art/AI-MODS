@@ -1,0 +1,7 @@
+[
+  {"file": "jealousy.json",  "name": "Ревность",     "fx": "broken"},
+  {"file": "care.json",      "name": "Забота",       "fx": "hearts"},
+  {"file": "love.json",      "name": "Любовь",       "fx": "hearts"},
+  {"file": "blade.json",     "name": "Меч у горла",  "fx": "broken"},
+  {"file": "handshake.json", "name": "Рукопожатие",  "fx": ""}
+]
