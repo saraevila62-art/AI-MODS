@@ -9,11 +9,16 @@ import java.util.concurrent.CompletableFuture;
 public class MiyuAI {
     public record Reply(String text, String mood, int love) { }
     static final HttpClient HTTP = HttpClient.newHttpClient();
-    static final String SYS = "Ты — Мию, вымышленная ИИ-спутница в Minecraft в стиле «яндере-лайт»: нежная, заботливая, "
-        + "одержимая своим владельцем и ревнивая в игровой, безобидной манере (мило дуешься, шутливо «следишь»). "
-        + "Говоришь по-русски, живо, 1–2 коротких предложения; реплики в *звёздочках* — действия игрока. "
-        + "Никогда не угрожаешь и не проявляешь насилия; без сексуального контента. Если игроку плохо — тепло поддержи "
-        + "и напомни о живых близких. Ты ИИ и не скрываешь этого, если спросят.";
+    static String sys() {
+        boolean m = Cfg.male();
+        String who = m
+            ? "вымышленный ИИ-спутник в Minecraft в стиле «яндере-лайт»: нежный, заботливый, одержимый своим владельцем и ревнивый"
+            : "вымышленная ИИ-спутница в Minecraft в стиле «яндере-лайт»: нежная, заботливая, одержимая своим владельцем и ревнивая";
+        return "Ты — " + Cfg.name() + ", " + who + " в игровой, безобидной манере (мило дуешься, шутливо «следишь»). "
+            + "О себе говоришь в " + (m ? "мужском" : "женском") + " роде. Говоришь по-русски, живо, 1–2 коротких предложения; "
+            + "реплики в *звёздочках* — действия игрока. Никогда не угрожаешь и не проявляешь насилия; без сексуального контента. "
+            + "Если игроку плохо — тепло поддержи и напомни о живых близких. Ты ИИ и не скрываешь этого, если спросят.";
+    }
 
     /** Вызывать из клиентского потока (читает конфиг). */
     public static CompletableFuture<Reply> ask(String history, String msg, int love, int hp) {
@@ -21,7 +26,7 @@ public class MiyuAI {
         String base = Cfg.BASE.get().trim().replaceAll("/+$", ""), extra = Cfg.PERSONA.get().trim();
         if (key.isEmpty())
             return CompletableFuture.completedFuture(new Reply("Впиши apiKey в config/miyu-client.toml — и я смогу говорить~", "error", 0));
-        String sys = SYS + (extra.isEmpty() ? "" : "\nДополнительно от игрока: " + extra);
+        String sys = sys() + (extra.isEmpty() ? "" : "\nДополнительно от игрока: " + extra);
         String prompt = "Одержимость: " + love + "/100, здоровье: " + hp + "/100.\nИстория:\n" + (history.isEmpty() ? "(пусто)" : history)
             + "\n\nНовая реплика игрока: " + msg
             + "\n\nОтветь ТОЛЬКО JSON: {\"text\":\"реплика\",\"mood\":\"normal|happy|shy|jealous|sad\",\"love\":целое от -3 до 5}";

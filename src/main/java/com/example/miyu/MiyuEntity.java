@@ -19,7 +19,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class MiyuEntity extends TamableAnimal {
-    public static final int G_LEN = 60;
+    /** Длительность жеста в тиках. */
+    public static int len(int g) {
+        return switch (g) { case 1 -> 140; case 2 -> 120; case 3 -> 90; case 4 -> 160; case 5 -> 100; case 6 -> 140; case 7 -> 120; case 8 -> 120; default -> 60; };
+    }
     static final EntityDataAccessor<Integer> GESTURE = SynchedEntityData.defineId(MiyuEntity.class, EntityDataSerializers.INT);
     int seq, gUntil, gStart;
 
@@ -27,10 +30,10 @@ public class MiyuEntity extends TamableAnimal {
         super.defineSynchedData(b);
         b.define(GESTURE, 0);
     }
-    /** 1 обнять, 2 погладить по голове, 3 помахать, 4 взять за руку, 5 ревнивый топот */
+    /** 1 обнять, 2 погладить, 3 помахать, 4 взять за руку, 5 ревнивый топот, 6 прижаться, 7 встретить, 8 смущение */
     public void playGesture(int g) {
         seq = (seq + 1) & 0xFFF;
-        gUntil = tickCount + G_LEN;
+        gUntil = tickCount + len(g);
         entityData.set(GESTURE, (seq << 4) | (g & 15));
     }
     public int gestureId() { return entityData.get(GESTURE) & 15; }
@@ -41,13 +44,13 @@ public class MiyuEntity extends TamableAnimal {
     }
     @Override public void tick() {
         super.tick();
-        if (level().isClientSide && tickCount - gStart < G_LEN && tickCount % 3 == 0) {
+        if (level().isClientSide && tickCount - gStart < len(gestureId()) && tickCount % 3 == 0) {
             int g = gestureId();
             if (g == 5) {
                 for (int i = 0; i < 2; i++)
                     level().addParticle(ParticleTypes.DAMAGE_INDICATOR, getX() + (random.nextDouble() - 0.5) * 1.2,
                         getY() + 0.8 + random.nextDouble(), getZ() + (random.nextDouble() - 0.5) * 1.2, 0, 0.05, 0);
-            } else if (g == 1 || g == 2 || g == 4) {
+            } else if (g == 1 || g == 2 || g == 4 || g == 6 || g == 7) {
                 level().addParticle(ParticleTypes.HEART, getX() + (random.nextDouble() - 0.5), getY() + 1.6 + random.nextDouble() * 0.4,
                     getZ() + (random.nextDouble() - 0.5), 0, 0.05, 0);
             }

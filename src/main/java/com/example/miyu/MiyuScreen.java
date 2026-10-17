@@ -15,12 +15,14 @@ import net.neoforged.neoforge.network.PacketDistributor;
 public class MiyuScreen extends Screen {
     static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath(Miyu.ID, "textures/entity/miyu.png");
     static int love = 40, hp = 100;
-    static String say = "Ты пришёл... я так ждала~", mood = "happy";
+    static String say = null, mood = "happy";
+    static String g(String f, String m) { return Cfg.male() ? m : f; }
+    static String shown() { return say != null ? say : g("Ты пришёл... я так ждала~", "Ты пришёл... я так ждал~"); }
     static final List<String> hist = new ArrayList<>();
     /** {название, сообщение для ИИ, номер жеста} */
     static final String[][] ACT = {{"Погладить", "*нежно глажу тебя по голове*", "2"}, {"Обнять", "*крепко обнимаю тебя*", "1"},
         {"Взять за руку", "*беру тебя за руку*", "4"}, {"Помахать", "*машу тебе рукой*", "3"},
-        {"Признаться", "Я люблю тебя.", "1"}, {"Подарить цветок", "*дарю тебе цветок*", "0"}};
+        {"Признаться", "Я люблю тебя.", "1"}, {"Прижаться", "*прижимаюсь к тебе ближе*", "6"}};
     static final String[] TABS = {"Общение", "Действия", "Приказы"};
     static final String[] TKEY = {"chat", "act", "ord"};
 
@@ -118,8 +120,8 @@ public class MiyuScreen extends Screen {
         g.blit(TEX, px + 8, py + 8, 36, 36, 8, 8, 8, 8, 64, 64);
         g.blit(TEX, px + 8, py + 8, 36, 36, 40, 8, 8, 8, 64, 64);
         g.renderOutline(px + 8, py + 8, 36, 36, 0xFF5B3A8A);
-        g.drawString(font, "Мию", px + 50, py + 8, 0xFFECE6F7, true);
-        g.drawString(font, "— одержима, ревнивая", px + 50 + font.width("Мию "), py + 8, 0xFFA898C8, false);
+        g.drawString(font, Cfg.name(), px + 50, py + 8, 0xFFECE6F7, true);
+        g.drawString(font, g("— одержима, ревнивая", "— одержим, ревнив"), px + 50 + font.width(Cfg.name() + " "), py + 8, 0xFFA898C8, false);
         bar(g, px + 50, py + 20, pw - 58, 10, hp, 0xFFFF4A63, "Здоровье", font);
         bar(g, px + 50, py + 33, pw - 58, 10, love, 0xFFFF3D8B, "Одержимость", font);
         g.fill(px + 8, py + 46, px + pw - 8, py + 47, 0xFF2D2048);
@@ -129,7 +131,7 @@ public class MiyuScreen extends Screen {
         int ac = col(mood);
         g.fill(px, dy, px + pw, dy + 38, 0xCC000000); g.fill(px, dy, px + 3, dy + 38, mood.equals("jealous") ? 0xFFFF3030 : 0xFFFF3D8B);
         int i = 0;
-        for (var l : font.split(Component.literal(lab(mood) + " " + say), pw - 14)) { if (i >= 3) break; g.drawString(font, l, px + 7, dy + 4 + i * 10, ac, false); i++; }
+        for (var l : font.split(Component.literal(lab(mood) + " " + shown()), pw - 14)) { if (i >= 3) break; g.drawString(font, l, px + 7, dy + 4 + i * 10, ac, false); i++; }
     }
 
     static class RowButton extends Button {
