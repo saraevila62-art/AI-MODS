@@ -1,5 +1,6 @@
 package com.example.miyu;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -40,6 +41,17 @@ public class MiyuEntity extends TamableAnimal {
     }
     @Override public void tick() {
         super.tick();
+        if (level().isClientSide && tickCount - gStart < G_LEN && tickCount % 3 == 0) {
+            int g = gestureId();
+            if (g == 5) {
+                for (int i = 0; i < 2; i++)
+                    level().addParticle(ParticleTypes.DAMAGE_INDICATOR, getX() + (random.nextDouble() - 0.5) * 1.2,
+                        getY() + 0.8 + random.nextDouble(), getZ() + (random.nextDouble() - 0.5) * 1.2, 0, 0.05, 0);
+            } else if (g == 1 || g == 2 || g == 4) {
+                level().addParticle(ParticleTypes.HEART, getX() + (random.nextDouble() - 0.5), getY() + 1.6 + random.nextDouble() * 0.4,
+                    getZ() + (random.nextDouble() - 0.5), 0, 0.05, 0);
+            }
+        }
         if (!level().isClientSide && tickCount < gUntil) {
             var o = getOwner();
             if (o != null) getLookControl().setLookAt(o, 30f, 30f);

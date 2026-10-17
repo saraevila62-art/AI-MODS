@@ -20,7 +20,7 @@ public class MiyuAI {
         String key = Cfg.KEY.get().trim(), model = Cfg.MODEL.get().trim(), prov = Cfg.PROVIDER.get().trim().toLowerCase();
         String base = Cfg.BASE.get().trim().replaceAll("/+$", ""), extra = Cfg.PERSONA.get().trim();
         if (key.isEmpty())
-            return CompletableFuture.completedFuture(new Reply("Впиши apiKey в config/miyu-client.toml — и я смогу говорить~", "sad", 0));
+            return CompletableFuture.completedFuture(new Reply("Впиши apiKey в config/miyu-client.toml — и я смогу говорить~", "error", 0));
         String sys = SYS + (extra.isEmpty() ? "" : "\nДополнительно от игрока: " + extra);
         String prompt = "Одержимость: " + love + "/100, здоровье: " + hp + "/100.\nИстория:\n" + (history.isEmpty() ? "(пусто)" : history)
             + "\n\nНовая реплика игрока: " + msg
@@ -44,7 +44,7 @@ public class MiyuAI {
         HttpRequest req = rb.header("content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(body.toString())).build();
         return HTTP.sendAsync(req, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8))
             .thenApply(r -> parse(r.body()))
-            .exceptionally(ex -> new Reply("Не получилось связаться с ИИ... проверь интернет и baseUrl.", "sad", 0));
+            .exceptionally(ex -> new Reply("Не получилось связаться с ИИ... проверь интернет и baseUrl.", "error", 0));
     }
 
     static JsonObject msgObj(String role, String content) {
@@ -57,7 +57,7 @@ public class MiyuAI {
             if (o.has("error")) {
                 JsonElement er = o.get("error");
                 String msg = er.isJsonObject() && er.getAsJsonObject().has("message") ? er.getAsJsonObject().get("message").getAsString() : er.toString();
-                return new Reply("Ошибка ИИ: " + msg, "sad", 0);
+                return new Reply("Ошибка ИИ: " + msg, "error", 0);
             }
             String t = o.has("choices")
                 ? o.getAsJsonArray("choices").get(0).getAsJsonObject().getAsJsonObject("message").get("content").getAsString()
