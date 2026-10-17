@@ -10,7 +10,7 @@ public class MiyuRenderer extends HumanoidMobRenderer<MiyuEntity, PlayerModel<Mi
     static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath(Miyu.ID, "textures/entity/miyu.png");
 
     public MiyuRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER_SLIM), true), 0.5f);
+        super(ctx, new PlayerModel<>(ctx.bakeLayer(ModelLayers.PLAYER), false), 0.5f);
     }
     @Override public ResourceLocation getTextureLocation(MiyuEntity e) { return TEX; }
 }
